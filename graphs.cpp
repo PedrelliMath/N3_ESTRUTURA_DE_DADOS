@@ -1,5 +1,16 @@
 #include <iostream>
 #include <stdlib.h>
+#include <cstdlib>
+
+#ifdef _WIN32
+    #define CLEAR_COMMAND "cls" // Comando para limpar console no Windows
+#else
+    #define CLEAR_COMMAND "clear" // Comando para limpar console no Linux
+#endif
+
+void clearConsole() {
+    system(CLEAR_COMMAND);
+}
 
 #define vertex int
 
@@ -20,7 +31,11 @@ static int **MATRIXint( int r, int c, int val);
 void GRAPHremoveArc( Graph G, vertex v, vertex w);
 void GRAPHshow( Graph G);
 int UGRAPHseqColoring(Graph G, int *color);
-
+void mainMenu(void);
+void submenugraphs(void);
+void submenugraphscolor(void);
+void showgraphsoptions(void);
+void sequencialColoring(void);
 
 /* REPRESENTAÇÃO POR MATRIZ DE ADJACÊNCIAS: A função GRAPHinit() constrói um grafo com vértices 0 1 .. V-1 e nenhum arco. */
 
@@ -110,41 +125,184 @@ int UGRAPHseqColoring(Graph G, int *color) {
    return k;
 }
 
+Graph G1 = GRAPHinit(4);
+Graph G2 = GRAPHinit(10);
+
+void mainMenu(void){
+    clearConsole();
+
+    int option = -1;
+    do{
+        clearConsole();
+        std::cout << "1.\tImprimir grafos\n2.\tColorir Grafos\n0.\tSair\n";
+        std::cin >> option;
+        switch(option){
+            case 1:
+                submenugraphs();
+                break;
+            case 2:
+                submenugraphscolor();
+                break;
+            case 0: 
+                break;
+            default:
+                std::cout << "Opcao invalida...\n";
+                break;
+        }
+    }while(option != 0);
+}
+
+void submenugraphs(void){
+    clearConsole();
+
+    int option = -1;
+    do{
+        showgraphsoptions();
+        std::cin >> option;
+        switch(option){
+            case 1:
+                std::cout << "Grafo G1:\n";
+                GRAPHshow(G1);
+                break;
+            case 2:
+                std::cout << "Grafo G2:\n";
+                GRAPHshow(G2);
+                break;
+            case 0:
+                break;
+            default:
+                std::cout << "Opcao invalida...\n";
+                break;
+        }
+    }while(option != 0);
+}
+
+void showgraphsoptions(void){
+    std::cout << "Selecione o grafo: \n";
+    std::cout << "1.\tGrafo Exemplo 1\n2.\tGrafo Exemplo 2\n0.\tVoltar\n";
+}
+
+void submenugraphscolor(void){
+    clearConsole();
+
+    std::cout << "Escolha um algoritimo: \n";
+    int option = -1;
+    do{
+        std::cout << "1.\tAlgoritimo Sequencial\n0.\tVoltar\n";
+        std::cin >> option;
+        switch(option){
+            case 1: 
+                sequencialColoring();
+                break;
+            case 0:
+                break;
+            default:
+                std::cout << "Opcao invalida...\n";
+                break;
+        }   
+
+    }while(option != 0);
+}
+
+void sequencialColoring(void){
+    int option = -1;
+    do{
+        showgraphsoptions();
+        std::cin >> option;
+        switch(option){
+            case 1:
+            {
+                int color1[5];
+                int numColors = UGRAPHseqColoring(G1, color1);
+                std::cout << "\nResultado de coloracao sequencial: \n";
+                for (vertex v = 0; v < G1->V; ++v) {
+                std::cout << "Vertice " << v << ": Cor " << color1[v] << "\n";
+                }
+                std::cout << "\nQuantidade de cores utilizadas: " << numColors << "\n";
+                break;
+            }
+            case 2:
+            {
+                int color2[10];
+                int numColors2 = UGRAPHseqColoring(G2, color2);
+                std::cout << "\nResultado de coloracao sequencial: \n";
+                for (vertex v = 0; v < G2->V; ++v) {
+                std::cout << "Vertice " << v << ": Cor " << color2[v] << "\n";
+                }
+                std::cout << "\nQuantidade de cores utilizadas: " << numColors2 << "\n";
+            }
+            case 0:
+                break;
+            default:
+                std::cout << "Opcao invalida...\n";
+                break;
+        }
+    }while(option != 0);
+}
+
 int main(void) { 
-    // Criar um grafo com 5 vértices
-    Graph G = GRAPHinit(4);
 
-    // Inserir alguns arcos no grafo
-    GRAPHinsertArc(G, 0, 1);
-    GRAPHinsertArc(G, 0, 2);
-    GRAPHinsertArc(G, 2, 3);
-    GRAPHinsertArc(G, 2, 0);
-    GRAPHinsertArc(G, 3, 2);
-    GRAPHinsertArc(G, 3, 1);
-    GRAPHinsertArc(G, 1, 0);
-    GRAPHinsertArc(G, 1, 3);
-    
-    // Mostrar o grafo
-    std::cout << "Grafo G:\n";
-    GRAPHshow(G);
+    // Criar arestas grafo exemplo 1
+    GRAPHinsertArc(G1, 0, 1);
+    GRAPHinsertArc(G1, 0, 3);
+    GRAPHinsertArc(G1, 1, 0);
+    GRAPHinsertArc(G1, 1, 2);
+    GRAPHinsertArc(G1, 2, 1);
+    GRAPHinsertArc(G1, 2, 3);
+    GRAPHinsertArc(G1, 3, 0);
+    GRAPHinsertArc(G1, 3, 2);
 
-    int color[5];
-    int numColors = UGRAPHseqColoring(G, color);
+    // Criar arestas grafo exemplo 2
+    GRAPHinsertArc(G2, 0, 1);
+    GRAPHinsertArc(G2, 0, 2);
+    GRAPHinsertArc(G2, 0, 5);
+    GRAPHinsertArc(G2, 0, 8);
+    GRAPHinsertArc(G2, 0, 7);
+    GRAPHinsertArc(G2, 1, 0);
+    GRAPHinsertArc(G2, 1, 2);
+    GRAPHinsertArc(G2, 1, 9);
+    GRAPHinsertArc(G2, 2, 0);
+    GRAPHinsertArc(G2, 2, 1);
+    GRAPHinsertArc(G2, 2, 4);
+    GRAPHinsertArc(G2, 2, 8);
+    GRAPHinsertArc(G2, 2, 3);
+    GRAPHinsertArc(G2, 3, 2);
+    GRAPHinsertArc(G2, 3, 9);
+    GRAPHinsertArc(G2, 3, 6);
+    GRAPHinsertArc(G2, 4, 2);
+    GRAPHinsertArc(G2, 4, 8);
+    GRAPHinsertArc(G2, 4, 7);
+    GRAPHinsertArc(G2, 4, 6);
+    GRAPHinsertArc(G2, 5, 0);
+    GRAPHinsertArc(G2, 5, 7);
+    GRAPHinsertArc(G2, 5, 6);
+    GRAPHinsertArc(G2, 6, 3);
+    GRAPHinsertArc(G2, 6, 4);
+    GRAPHinsertArc(G2, 6, 5);
+    GRAPHinsertArc(G2, 7, 0);
+    GRAPHinsertArc(G2, 7, 9);
+    GRAPHinsertArc(G2, 7, 4);
+    GRAPHinsertArc(G2, 7, 5);
+    GRAPHinsertArc(G2, 8, 0);
+    GRAPHinsertArc(G2, 8, 2);
+    GRAPHinsertArc(G2, 8, 4);
+    GRAPHinsertArc(G2, 9, 1);
+    GRAPHinsertArc(G2, 9, 3);
+    GRAPHinsertArc(G2, 9, 7);
 
-    // Mostrar a coloração
-    std::cout << "\nResultado de coloracao sequencial: \n";
-    for (vertex v = 0; v < G->V; ++v) {
-        std::cout << "Vertice " << v << ": Cor " << color[v] << "\n";
+    mainMenu();
+
+    for (vertex i = 0; i < G1->V; ++i) {
+        free(G1->adj[i]);
     }
+    free(G1->adj);
+    free(G1);
 
-    std::cout << "\nQuantidade de cores utilizadas: " << numColors << "\n";
-
-    // Liberar a memória alocada para o grafo
-    // (lembre-se de liberar a memória alocada para a matriz de adjacências)
-    for (vertex i = 0; i < G->V; ++i)
-        free(G->adj[i]);
-    free(G->adj);
-    free(G);
+    for (vertex i = 0; i < G2->V; ++i) {
+        free(G2->adj[i]);
+    }
+    free(G2->adj);
+    free(G2);
 
     return 0;
 }
