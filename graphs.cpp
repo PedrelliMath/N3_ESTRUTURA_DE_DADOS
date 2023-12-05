@@ -127,6 +127,7 @@ int UGRAPHseqColoring(Graph G, int *color) {
 
 Graph G1 = GRAPHinit(4);
 Graph G2 = GRAPHinit(10);
+Graph G3 = GRAPHinit(17);
 
 void mainMenu(void){
     clearConsole();
@@ -168,6 +169,10 @@ void submenugraphs(void){
                 std::cout << "Grafo G2:\n";
                 GRAPHshow(G2);
                 break;
+            case 3:
+                std::cout << "Grafo G3:\n";
+                GRAPHshow(G3);
+                break;
             case 0:
                 break;
             default:
@@ -179,7 +184,7 @@ void submenugraphs(void){
 
 void showgraphsoptions(void){
     std::cout << "Selecione o grafo: \n";
-    std::cout << "1.\tGrafo Exemplo 1\n2.\tGrafo Exemplo 2\n0.\tVoltar\n";
+    std::cout << "1.\tGrafo Exemplo 1\n2.\tGrafo Exemplo 2\n3.\tGrafo Exemplo 3\n0.\tVoltar\n";
 }
 
 void submenugraphscolor(void){
@@ -230,6 +235,18 @@ void sequencialColoring(void){
                 std::cout << "Vertice " << v << ": Cor " << color2[v] << "\n";
                 }
                 std::cout << "\nQuantidade de cores utilizadas: " << numColors2 << "\n";
+                break;
+            }
+            case 3:
+            {
+                int color3[17];
+                int numColors3 = UGRAPHseqColoring(G3, color3);
+                std::cout << "\nResultado de coloracao sequencial: \n";
+                for (vertex v = 0; v < G3->V; ++v) {
+                std::cout << "Vertice " << v << ": Cor " << color3[v] << "\n";
+                }
+                std::cout << "\nQuantidade de cores utilizadas: " << numColors3 << "\n";
+                break;
             }
             case 0:
                 break;
@@ -290,6 +307,94 @@ int main(void) {
     GRAPHinsertArc(G2, 9, 3);
     GRAPHinsertArc(G2, 9, 7);
 
+    // Criar arestas grafo exemplo 3
+    GRAPHinsertArc(G3, 0, 1);
+    GRAPHinsertArc(G3, 0, 2);
+    GRAPHinsertArc(G3, 0, 14);
+    GRAPHinsertArc(G3, 1, 0);
+    GRAPHinsertArc(G3, 1, 2);
+    GRAPHinsertArc(G3, 1, 13);
+    GRAPHinsertArc(G3, 1, 14);
+    GRAPHinsertArc(G3, 2, 0);
+    GRAPHinsertArc(G3, 2, 1);
+    GRAPHinsertArc(G3, 2, 3);
+    GRAPHinsertArc(G3, 2, 4);
+    GRAPHinsertArc(G3, 2, 12);
+    GRAPHinsertArc(G3, 2, 13);
+    GRAPHinsertArc(G3, 2, 14);
+    GRAPHinsertArc(G3, 2, 15);
+    GRAPHinsertArc(G3, 3, 2);
+    GRAPHinsertArc(G3, 3, 4);
+    GRAPHinsertArc(G3, 3, 13);
+    GRAPHinsertArc(G3, 3, 15);
+    GRAPHinsertArc(G3, 3, 11);
+    GRAPHinsertArc(G3, 4, 2);
+    GRAPHinsertArc(G3, 4, 3);
+    GRAPHinsertArc(G3, 4, 5);
+    GRAPHinsertArc(G3, 4, 6);
+    GRAPHinsertArc(G3, 4, 9);
+    GRAPHinsertArc(G3, 4, 10);
+    GRAPHinsertArc(G3, 4, 16);
+    GRAPHinsertArc(G3, 5, 4);
+    GRAPHinsertArc(G3, 5, 6);
+    GRAPHinsertArc(G3, 5, 10);
+    GRAPHinsertArc(G3, 5, 11);
+    GRAPHinsertArc(G3, 6, 4);
+    GRAPHinsertArc(G3, 6, 5);
+    GRAPHinsertArc(G3, 6, 7);
+    GRAPHinsertArc(G3, 6, 8);
+    GRAPHinsertArc(G3, 6, 9);
+    GRAPHinsertArc(G3, 6, 10);
+    GRAPHinsertArc(G3, 6, 16);
+    GRAPHinsertArc(G3, 7, 6);
+    GRAPHinsertArc(G3, 7, 8);
+    GRAPHinsertArc(G3, 7, 9);
+    GRAPHinsertArc(G3, 7, 10);
+    GRAPHinsertArc(G3, 8, 6);
+    GRAPHinsertArc(G3, 8, 7);
+    GRAPHinsertArc(G3, 8, 9);
+    GRAPHinsertArc(G3, 9, 4);
+    GRAPHinsertArc(G3, 9, 6);
+    GRAPHinsertArc(G3, 9, 7);
+    GRAPHinsertArc(G3, 9, 8);
+    GRAPHinsertArc(G3, 9, 10);
+    GRAPHinsertArc(G3, 10, 4);
+    GRAPHinsertArc(G3, 10, 5);
+    GRAPHinsertArc(G3, 10, 6);
+    GRAPHinsertArc(G3, 10, 7);
+    GRAPHinsertArc(G3, 10, 9);
+    GRAPHinsertArc(G3, 10, 11);
+    GRAPHinsertArc(G3, 11, 3);
+    GRAPHinsertArc(G3, 11, 5);
+    GRAPHinsertArc(G3, 11, 10);
+    GRAPHinsertArc(G3, 11, 12);
+    GRAPHinsertArc(G3, 11, 15);
+    GRAPHinsertArc(G3, 11, 16);
+    GRAPHinsertArc(G3, 12, 2);
+    GRAPHinsertArc(G3, 12, 11);
+    GRAPHinsertArc(G3, 12, 13);
+    GRAPHinsertArc(G3, 12, 15);
+    GRAPHinsertArc(G3, 13, 1);
+    GRAPHinsertArc(G3, 13, 2);
+    GRAPHinsertArc(G3, 13, 3);
+    GRAPHinsertArc(G3, 13, 12);
+    GRAPHinsertArc(G3, 13, 14);
+    GRAPHinsertArc(G3, 13, 15);
+    GRAPHinsertArc(G3, 14, 0);
+    GRAPHinsertArc(G3, 14, 1);
+    GRAPHinsertArc(G3, 14, 2);
+    GRAPHinsertArc(G3, 14, 13);
+    GRAPHinsertArc(G3, 15, 2);
+    GRAPHinsertArc(G3, 15, 3);
+    GRAPHinsertArc(G3, 15, 11);
+    GRAPHinsertArc(G3, 15, 12);
+    GRAPHinsertArc(G3, 15, 13);
+    GRAPHinsertArc(G3, 15, 16);
+    GRAPHinsertArc(G3, 16, 4);
+    GRAPHinsertArc(G3, 16, 15);
+    GRAPHinsertArc(G3, 16, 11);
+    GRAPHinsertArc(G3, 16, 6);
+
     mainMenu();
 
     for (vertex i = 0; i < G1->V; ++i) {
@@ -303,6 +408,12 @@ int main(void) {
     }
     free(G2->adj);
     free(G2);
+
+    for (vertex i = 0; i < G3->V; ++i) {
+        free(G3->adj[i]);
+    }
+    free(G3->adj);
+    free(G3);
 
     return 0;
 }
